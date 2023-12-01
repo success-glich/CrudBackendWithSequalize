@@ -1,4 +1,5 @@
 const { Sequelize, sequelize, Op } = require("../config/db");
+const { RoleModel } = require("../models/RoleModel");
 const UserModel = require("../models/UserModel");
 const list = async (req, res) => {
 
@@ -6,7 +7,7 @@ const list = async (req, res) => {
         // let result = { text: "sequelize I" };
 
         //  * Insert data into UserModel
-        // let insertData = await UserModel.create({ name: 'code Imporve', email: "code@gmail.com", role_id: 1 })
+        // let insertData = await RoleModel.create({ name: 'admin' });
 
         // * Update Data
         // const dataUpdate = await UserModel.update({ name: 'new Code 2' }, { where: { id: 2 } });
@@ -42,26 +43,32 @@ const list = async (req, res) => {
 
         // * result
 
-        const result1 = await UserModel.findAll({
-            attributes: ['id', 'name', ['email', 'emailId'], [sequelize.literal('Max("created_at"'), 'latest_created_at']],
-            where: {
-                // role_id: 1,
-                // name: 'bulk1'
-                id: { [Op.lte]: 5 },
-                email: { [Op.like]: '%@gmail.com' }
-            },
+        // const result1 = await UserModel.findAll({
+        //     attributes: [
+        //         'name',
+        //     ],
+        //     where: {
+        //         // role_id: 1,
+        //         // name: 'bulk1'
+        //         id: { [Op.gte]: 5 },
+        //         email: { [Op.like]: '%@gmail.com' }
+        //     },
 
-            // logging: console.log
-            group: ['name']
-            ,
-            order: [
+        //     logging: console.log,
+        //     group: ['name']
+        //     ,
+        //     // order: [
 
-                ['name', 'Desc']
-            ],
-            limit: 5, offset: 1,
-        })
+        //     //     ['name', 'Desc']
+        //     // ],
+        //     limit: 5,
+        //     // offset: 1, it skips the data 
 
-        res.status(200).json(result1);
+        // })
+
+        // * Custom function 
+        let result2 = await UserModel.list();
+        res.status(200).json(result2);
     } catch (err) {
         console.log('err ', err);
         res.status(400).json(err);

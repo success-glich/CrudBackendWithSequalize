@@ -21,10 +21,6 @@ connection.sequelize = sequelize;
 connection.Model = Model;
 connection.DataTypes = DataTypes;
 connection.Op = Sequelize.Op;
-sequelize.sync().then(() => {
-    console.log('yes re-sync');
-}).catch(err => {
-    console.log('synchronizing database Error:', err);
-})
+
 
 module.exports = connection;
